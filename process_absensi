@@ -1,0 +1,19 @@
+<?php
+include 'component/head.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $pegawai_id = $_POST['pegawai_id'];
+    $tanggal = $_POST['tanggal'];
+    $status = $_POST['status'];
+
+    try {
+        $stmt = $pdo->prepare("INSERT INTO absensi (pegawai_id, tanggal, status) VALUES (?, ?, ?)");
+        $stmt->execute([$pegawai_id, $tanggal, $status]);
+
+        header("Location: absensi.php?success=Absensi berhasil disimpan");
+        exit();
+    } catch (Exception $e) {
+        die("Gagal menyimpan absensi: " . $e->getMessage());
+    }
+}
+?>
